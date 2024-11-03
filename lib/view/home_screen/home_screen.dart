@@ -22,11 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context.read<HomeScreenController>().getCategoris();
       },
     );
-    // WidgetsBinding.instance.addPostFrameCallback(
-    //   (timeStamp) async {
-    //     await context.read<HomeScreenController>().getCategoris();
-    //   },
-    // );
+
     super.initState();
   }
 
@@ -149,71 +145,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               .read<HomeScreenController>()
                               .onCategorySelection(index);
                         },
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: homeScreenProvider.selectedIndex == index
-                                  ? Colors.black
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Text(
-                            homeScreenProvider.categoriesList[index],
-                            style: TextStyle(
-                                color: homeScreenProvider.selectedIndex == index
-                                    ? Colors.white
-                                    : Colors.black),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 25),
+                            decoration: BoxDecoration(
+                                color:
+                                    homeScreenProvider.selectedCategoryIndex ==
+                                            index
+                                        ? Colors.black
+                                        : Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              homeScreenProvider.categoriesList[index],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: homeScreenProvider
+                                              .selectedCategoryIndex ==
+                                          index
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    // children: [
-                    //   Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                    //     margin: EdgeInsets.symmetric(horizontal: 10),
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.black,
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //     child: Text(
-                    //       "All",
-                    //       style: TextStyle(color: Colors.white),
-                    //     ),
-                    //   ),
-                    //   Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                    //     margin: EdgeInsets.only(right: 10),
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.white,
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //     child: Text(
-                    //       "Men",
-                    //       style: TextStyle(color: Colors.black),
-                    //     ),
-                    //   ),
-                    //   Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                    //     margin: EdgeInsets.only(right: 10),
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.white,
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //     child: Text(
-                    //       "women",
-                    //       style: TextStyle(color: Colors.black),
-                    //     ),
-                    //   ),
-                    //   Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                    //     margin: EdgeInsets.only(right: 10),
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.white,
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //     child: Text(
-                    //       "Kids",
-                    //       style: TextStyle(color: Colors.black),
-                    //     ),
-                    //   ),
-                    // ],
                   ),
                 ),
                 SizedBox(
@@ -232,10 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.all(10),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                          ),
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  mainAxisExtent: 250),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return InkWell(
@@ -258,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Stack(
                                       children: [
                                         Container(
+                                          height: 200,
                                           padding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           decoration: BoxDecoration(
@@ -295,14 +253,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     homeScreenProvider.productsList[index].title
                                         .toString(),
+                                    maxLines: 2,
                                     style: TextStyle(
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     homeScreenProvider.productsList[index].price
                                         .toString(),
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),

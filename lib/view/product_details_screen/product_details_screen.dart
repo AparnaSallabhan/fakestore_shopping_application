@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:fakestore_shopping_application/controller/cart_screen_controller.dart';
 import 'package:fakestore_shopping_application/controller/product_details_screen_controller.dart';
+import 'package:fakestore_shopping_application/view/cart_screen/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailsScreenProvider =
+    final productDetailsScreenProvider =
         context.watch<ProductDetailsScreenController>();
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +55,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           )
         ],
       ),
-      body: ProductDetailsScreenProvider.isLoading
+      body: productDetailsScreenProvider.isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -67,15 +69,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Stack(
                       children: [
                         Container(
+                          height: 400,
+                          //width: 200,
                           decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                   image: NetworkImage(
-                                      ProductDetailsScreenProvider
-                                          .productDetails!.image
-                                          .toString()))),
+                                      productDetailsScreenProvider
+                                              .productDetails?.image
+                                              .toString() ??
+                                          ""))),
                         ),
                         Positioned(
                           top: 8,
@@ -100,7 +105,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     height: 10,
                   ),
                   Text(
-                    ProductDetailsScreenProvider.productDetails!.title.toString(),
+                    productDetailsScreenProvider.productDetails!.title
+                        .toString(),
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -113,7 +119,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         color: Colors.amber,
                       ),
                       Text(
-                        "${ProductDetailsScreenProvider.productDetails!.rating!.rate.toString()}/5 ",
+                        "${productDetailsScreenProvider.productDetails!.rating!.rate.toString()}/5 ",
                         style: TextStyle(color: Colors.black),
                       ),
                       Text(
@@ -127,7 +133,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   Text(
                     softWrap: true,
-                    ProductDetailsScreenProvider.productDetails!.description.toString(),
+                    productDetailsScreenProvider.productDetails!.description
+                        .toString(),
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   SizedBox(
@@ -193,15 +200,62 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     height: 10,
                   ),
                   Container(
+                    padding: EdgeInsets.all(15),
                     alignment: Alignment.center,
                     height: 80,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(20)),
                     child: Row(
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("price"),
-                            Text(ProductDetailsScreenProvider.productDetails!.price.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)
+                            Text(
+                              productDetailsScreenProvider.productDetails!.price
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            )
                           ],
+                        ),
+                        Spacer(),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartScreen(),
+                                ));
+                            context.read<CartScreenController>().addProduct(
+                                  id: productDetailsScreenProvider
+                                      .productDetails!.id!,
+                                  price: productDetailsScreenProvider
+                                      .productDetails!.price!,
+                                  name: productDetailsScreenProvider
+                                      .productDetails!.title,
+                                  desc: productDetailsScreenProvider
+                                      .productDetails!.description,
+                                  image: productDetailsScreenProvider
+                                      .productDetails!.image,
+                                );
+                          },
+                          child: Container(
+                            height: 50,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "ADD TO CART",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
                         )
                       ],
                     ),

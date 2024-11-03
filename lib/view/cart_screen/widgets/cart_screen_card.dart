@@ -11,6 +11,9 @@ class CartScreenCard extends StatelessWidget {
     required this.name,
     required this.quantity,
     required this.price,
+    this.onCancel,
+    this.onDecrement,
+    this.onIncrement
   });
   final String image;
   final int id;
@@ -18,6 +21,9 @@ class CartScreenCard extends StatelessWidget {
   final String name;
   final int quantity;
   final double price;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final VoidCallback? onCancel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,9 +36,12 @@ class CartScreenCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.network(
-                image,
-                height: 110,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  image,
+                  height: 100,
+                ),
               ),
               SizedBox(
                 width: 15,
@@ -41,12 +50,19 @@ class CartScreenCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    "sdfghjkl",
+                   // name,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      
+                      fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    description,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    "asdfuimbnvrtygu",
+                    //description,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   Text(
                     price.toString(),
@@ -57,13 +73,13 @@ class CartScreenCard extends StatelessWidget {
               Spacer(),
               Column(
                 children: [
-                  ElevatedButton.icon(onPressed: () {}, label: Icon(Icons.add)),
+                  ElevatedButton.icon(onPressed:onIncrement, label: Icon(Icons.add)),
                   Text(
                     quantity.toString(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   ElevatedButton.icon(
-                      onPressed: () {}, label: Icon(Icons.minimize))
+                      onPressed:onDecrement, label: Icon(Icons.minimize))
                 ],
               )
             ],
@@ -72,7 +88,7 @@ class CartScreenCard extends StatelessWidget {
             height: 10,
           ),
           InkWell(
-            onTap: () {},
+            onTap: onCancel,
             child: Container(
               height: 40,
               width: double.infinity,

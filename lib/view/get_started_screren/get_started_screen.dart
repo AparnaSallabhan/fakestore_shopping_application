@@ -15,7 +15,7 @@ class GetStartedScreen extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                //color: Colors.blueAccent,
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage("https://i.pinimg.com/564x/8f/f1/d9/8ff1d9a3fb0e66c0edb29dcaf64090ac.jpg"))

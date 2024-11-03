@@ -6,12 +6,13 @@ import 'package:http/http.dart' as http;
 
 class HomeScreenController with ChangeNotifier {
   bool isLoading = false;
-  List<ProductModel> productsList = [];
   List categoriesList = ["All"];
-  int selectedIndex = 0;
+  List<ProductModel> productsList = [];
+  int selectedCategoryIndex = 0;
   bool isProductsLoading = false;
 
   Future<void> getCategoris() async {
+    isLoading = true;
     categoriesList = ["All"];
     notifyListeners();
     var catUrl = Uri.parse("https://fakestoreapi.com/products/categories");
@@ -24,17 +25,17 @@ class HomeScreenController with ChangeNotifier {
     } catch (e) {
       print(e);
     }
+    isLoading = false;
     notifyListeners();
   }
 
   void onCategorySelection(int index) {
-    selectedIndex == index;
+    selectedCategoryIndex = index;
     notifyListeners();
-    if(selectedIndex==0){
+    if (selectedCategoryIndex == 0) {
       getAllProducts();
-    }
-    else{
-      getProductsByCategory(categoriesList[selectedIndex]);
+    } else {
+      getProductsByCategory(categoriesList[selectedCategoryIndex]);
     }
   }
 
@@ -55,10 +56,11 @@ class HomeScreenController with ChangeNotifier {
   }
 
   Future<void> getProductsByCategory(String category) async {
-     isLoading = true;
+    isProductsLoading = true;
     notifyListeners();
     try {
-      var url = Uri.parse("https://fakestoreapi.com/products/category/$category");
+      var url =
+          Uri.parse("https://fakestoreapi.com/products/category/$category");
       var product = await http.get(url);
       if (product.statusCode == 200) {
         productsList = productModelFromJson(product.body);
@@ -66,7 +68,7 @@ class HomeScreenController with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    isLoading = false;
+    isProductsLoading = false;
     notifyListeners();
   }
 }

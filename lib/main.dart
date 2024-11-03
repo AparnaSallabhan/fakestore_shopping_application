@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fakestore_shopping_application/controller/cart_screen_controller.dart';
 import 'package:fakestore_shopping_application/controller/home_screen_controller.dart';
 import 'package:fakestore_shopping_application/controller/product_details_screen_controller.dart';
 import 'package:fakestore_shopping_application/model/cart_model.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeScreenController(),),
-        ChangeNotifierProvider(create: (context) => ProductDetailsScreenController(),)
+        ChangeNotifierProvider(create: (context) => ProductDetailsScreenController(),),
+        ChangeNotifierProvider(create: (context) => CartScreenController(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
